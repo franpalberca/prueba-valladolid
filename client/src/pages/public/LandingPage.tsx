@@ -1,16 +1,12 @@
-import { Button } from "react-bootstrap"
-import { useAuth0 } from "@auth0/auth0-react"
+import PicturesButtons from "../../components/modalButton/PicturesButtons"
+import NavbarSite from "../../components/navbar/Navbar"
+
 
 const LandingPage = () => {
-    const {loginWithRedirect, logout, user, isLoading, isAuthenticated, getAccessTokenSilently} = useAuth0();
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
     return (
     <>
-        {user ? (<Button onClick={() => logout()}>Logout</Button>) : (<Button onClick={() => loginWithRedirect()}>Login</Button>)}
+       <NavbarSite />
+       <PicturesButtons />
     </>
   )
 }
