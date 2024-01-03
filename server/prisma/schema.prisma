@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("MONGO_CLUSTER_URI")
+}
+
+model Users {
+    id          String        @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    email       String        @unique
+    nickname    String
+    picture     String
+    footballers Footballers[]
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
+}
+
+model Footballers {
+    footballersId  String           @id @map("_id") @db.ObjectId
+    firstquestion  FirstQuestion[]
+    secondquestion SecondQuestion[]
+    thirdquestion  ThirdQuestion[]
+    fourthquestion FourthQuestion[]
+    fifthquestion  FifthQuestion[]
+    Users          Users?           @relation(fields: [usersId], references: [id])
+    usersId        String?          @db.ObjectId
+}
+
+model FirstQuestion {
+    firstQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
+    answer          Int
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
+    footballersId String?      @db.ObjectId
+}
+
+model SecondQuestion {
+    secondQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
+    answer           Int
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+
+    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
+    footballersId String?      @db.ObjectId
+}
+
+model ThirdQuestion {
+    ThirdQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
+    answer          Int
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
+    footballersId String?      @db.ObjectId
+}
+
+model FourthQuestion {
+    fourthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
+    answer           Int
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+
+    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
+    footballersId String?      @db.ObjectId
+}
+
+model FifthQuestion {
+    fifthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
+    answer          Int
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
+    footballersId String?      @db.ObjectId
+}
