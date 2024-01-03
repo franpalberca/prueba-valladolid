@@ -7,6 +7,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 interface ModalQuestionsProps extends ModalProps {
   onHide: () => void;
+  selectedImageId: string | null;
 }
 
 const ModalQuestions: React.FC<ModalQuestionsProps> = (props) => {
@@ -32,7 +33,10 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = (props) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       // Perform action for the last question (e.g., send data to backend)
-      console.log('Sending data to backend:', scores);
+      console.log('Sending data to backend:', {
+        imageId: props.selectedImageId,  // Usar props.selectedImageId aquí
+        scores,
+      });
       // Close the modal or perform any other action
       props.onHide();
     }
