@@ -1,5 +1,5 @@
 import {prisma} from '../db/clientPrisma';
-import { Request, Response } from "express";
+import {Request, Response} from 'express';
 
 export const createUser = async (req: Request, res: Response) => {
 	const {email, name, picture} = req.body;
@@ -45,6 +45,36 @@ export const createUser = async (req: Request, res: Response) => {
 				user: emailExist,
 			});
 		}
+	} catch (err) {
+		console.error(err);
+		return res.status(500).send({error: 'Internal server error'});
+	}
+};
+
+export const getUserByEmailParams = async (req: Request, res: Response) => {
+	const {email} = req.params;
+	try {
+		const userById = await prisma.user.findUnique({
+			where: {email: email},
+		});
+
+		return res.status(200).send(userById);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).send({error: 'Internal server error'});
+	}
+};
+
+export const deleteUserById = async (req: Request, res: Response) => {
+	const {email} = req.params;
+
+	try {
+		const deleteUser = await prisma.user.delete({where: {email: email}});
+		if (!deleteUser) {
+			return res.status(404).send({message: 'User not found'});
+		}
+
+		return res.status(200).send({message: 'User deleted successfully!'});
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send({error: 'Internal server error'});
