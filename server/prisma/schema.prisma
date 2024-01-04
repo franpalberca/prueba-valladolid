@@ -25,49 +25,19 @@ model Footballer {
     footballerPicture String
     createdAt         DateTime @default(now())
     updatedAt         DateTime @updatedAt
+    answer            Answer[]
 }
 
-model FirstQuestion {
-    firstQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
-    answer          Int
-    date            DateTime
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    footballerId    String?  @db.ObjectId
-}
-
-model SecondQuestion {
-    secondQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
-    answer           Int
-    date             DateTime
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @updatedAt
-    footballerId     String?  @db.ObjectId
-}
-
-model ThirdQuestion {
-    ThirdQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
-    answer          Int
-    date            DateTime
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    footballerId    String?  @db.ObjectId
-}
-
-model FourthQuestion {
-    fourthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
-    answer           Int
-    date             DateTime
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @updatedAt
-    footballerId     String?  @db.ObjectId
-}
-
-model FifthQuestion {
-    fifthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
-    answer          Int
-    date            DateTime
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    footballerId    String?  @db.ObjectId
+model Answer {
+    answerId               String      @id @default(auto()) @map("_id") @db.ObjectId
+    answerOne              Int
+    answerTwo              Int
+    answerThree            Int
+    answerFour             Int
+    answerFive             Int
+    date                   DateTime
+    createdAt              DateTime    @default(now())
+    updatedAt              DateTime    @updatedAt
+    Footballer             Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId           String?     @db.ObjectId
 }
