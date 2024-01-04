@@ -10,26 +10,28 @@ datasource db {
     url      = env("MONGO_CLUSTER_URI")
 }
 
-model Users {
+model User {
     id          String        @id @default(auto()) @map("_id") @db.ObjectId
     name        String
     email       String        @unique
-    nickname    String
     picture     String
-    footballers Footballers[]
+    // footballer Footballer?
     createdAt   DateTime      @default(now())
     updatedAt   DateTime      @updatedAt
 }
 
-model Footballers {
-    footballersId  String           @id @map("_id") @db.ObjectId
+model Footballer {
+    footballerId  String           @id @map("_id") @db.ObjectId
+    footballerName String
     firstquestion  FirstQuestion[]
     secondquestion SecondQuestion[]
     thirdquestion  ThirdQuestion[]
     fourthquestion FourthQuestion[]
     fifthquestion  FifthQuestion[]
-    Users          Users?           @relation(fields: [usersId], references: [id])
-    usersId        String?          @db.ObjectId
+    // User          User?           @relation(fields: [userId], references: [id])
+    // userId        String?          @db.ObjectId
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
 }
 
 model FirstQuestion {
@@ -37,9 +39,8 @@ model FirstQuestion {
     answer          Int
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-
-    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
-    footballersId String?      @db.ObjectId
+    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId String?      @db.ObjectId
 }
 
 model SecondQuestion {
@@ -47,9 +48,8 @@ model SecondQuestion {
     answer           Int
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
-
-    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
-    footballersId String?      @db.ObjectId
+    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId String?      @db.ObjectId
 }
 
 model ThirdQuestion {
@@ -57,9 +57,8 @@ model ThirdQuestion {
     answer          Int
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-
-    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
-    footballersId String?      @db.ObjectId
+    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId String?      @db.ObjectId
 }
 
 model FourthQuestion {
@@ -67,9 +66,8 @@ model FourthQuestion {
     answer           Int
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
-
-    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
-    footballersId String?      @db.ObjectId
+    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId String?      @db.ObjectId
 }
 
 model FifthQuestion {
@@ -77,7 +75,6 @@ model FifthQuestion {
     answer          Int
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-
-    Footballers   Footballers? @relation(fields: [footballersId], references: [footballersId])
-    footballersId String?      @db.ObjectId
+    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
+    footballerId String?      @db.ObjectId
 }
