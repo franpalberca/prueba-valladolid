@@ -1,4 +1,5 @@
 import RouterPaths from "./router/RouterPaths.routes"
+import './App.css'
 
 function App() {
 

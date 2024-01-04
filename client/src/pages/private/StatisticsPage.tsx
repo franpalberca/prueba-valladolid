@@ -1,27 +1,15 @@
 import {useState, useEffect} from 'react';
-import ModalQuestions from '../modalQuestions/ModalQuestions';
-import Image from 'react-bootstrap/Image';
+import {ApiResponse, Footballer} from '../../components/modalButton/PicturesButtons';
+import {useNavigate} from 'react-router-dom';
+import {STATISTICSPLAYER} from '../../config/routes/paths';
 import styled from 'styled-components';
+import Image from 'react-bootstrap/Image';
 
-export interface Footballer {
-	footballerId: string;
-	footballerName: string;
-	footballerPicture: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
-export interface ApiResponse {
-	allFootballers: Footballer[];
-}
-
-const url = import.meta.env.VITE_API_URL
-
-const PicturesButtons = () => {
-	const [modalShow, setModalShow] = useState(false);
-	const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+const url = import.meta.env.VITE_API_URL;
+const StatisticsPage = () => {
 	const [images, setImages] = useState<Footballer[]>([]);
-
+	const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+	const navigate = useNavigate();
 	useEffect(() => {
 		fetch(`${url}api/footballer`)
 			.then((response) => response.json())
@@ -31,30 +19,27 @@ const PicturesButtons = () => {
 			.catch((error) => console.error('Error fetching images:', error));
 	}, []);
 
-	const handleImageClick = (id: string | null) => {
-		setModalShow(true);
+	const handleImageClickStatistics = (id: string | null) => {
+		navigate(STATISTICSPLAYER);
 		setSelectedImageId(id);
 	};
-
 	return (
 		<ModalPicturesContainer>
-			<h1 className='title'>VALLADOLID FC</h1>
-			<h4 className='subtitle'>SELECCIONE EL JUGADOR PARA RESPONDER CUESTIONARIO</h4>
+			<h1 className='title'>PÁGINA DE ESTADÍSTICAS</h1>
+			<h4 className='subtitle'>SELECCIONE EL JUGADOR</h4>
 			<div className="pictures">
 				{images.map((image) => (
-					<StyledImage key={image.footballerId} id={image.footballerId} src={image.footballerPicture} alt={image.footballerName} onClick={() => handleImageClick(image.footballerId)} />
-					))}
+					<StyledImage key={image.footballerId} id={image.footballerId} src={image.footballerPicture} alt={image.footballerName} onClick={() => handleImageClickStatistics(image.footballerId)} />
+				))}
 			</div>
-
-			<ModalQuestions show={modalShow} onHide={() => setModalShow(false)} selectedImageId={selectedImageId} />
 		</ModalPicturesContainer>
 	);
 };
 
-export default PicturesButtons;
+export default StatisticsPage;
 
 const ModalPicturesContainer = styled.div`
-background-color:#921B88;
+    background-color:#921B88;
     color: white;
     & .title{
         display: flex;
