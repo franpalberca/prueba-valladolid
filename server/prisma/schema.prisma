@@ -11,70 +11,63 @@ datasource db {
 }
 
 model User {
-    id          String        @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
-    email       String        @unique
-    picture     String
-    // footballer Footballer?
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    email     String   @unique
+    picture   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Footballer {
-    footballerId  String           @id @map("_id") @db.ObjectId
-    footballerName String
-    firstquestion  FirstQuestion[]
-    secondquestion SecondQuestion[]
-    thirdquestion  ThirdQuestion[]
-    fourthquestion FourthQuestion[]
-    fifthquestion  FifthQuestion[]
-    // User          User?           @relation(fields: [userId], references: [id])
-    // userId        String?          @db.ObjectId
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
+    footballerId      String   @id @default(auto()) @map("_id") @db.ObjectId
+    footballerName    String
+    footballerPicture String
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
 }
 
 model FirstQuestion {
     firstQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
     answer          Int
+    date            DateTime
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
-    footballerId String?      @db.ObjectId
+    footballerId    String?  @db.ObjectId
 }
 
 model SecondQuestion {
     secondQuestionid String   @id @default(auto()) @map("_id") @db.ObjectId
     answer           Int
+    date             DateTime
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
-    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
-    footballerId String?      @db.ObjectId
+    footballerId     String?  @db.ObjectId
 }
 
 model ThirdQuestion {
     ThirdQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
     answer          Int
+    date            DateTime
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
-    footballerId String?      @db.ObjectId
+    footballerId    String?  @db.ObjectId
 }
 
 model FourthQuestion {
     fourthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
     answer           Int
+    date             DateTime
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
-    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
-    footballerId String?      @db.ObjectId
+    footballerId     String?  @db.ObjectId
 }
 
 model FifthQuestion {
     fifthQuestionId String   @id @default(auto()) @map("_id") @db.ObjectId
     answer          Int
+    date            DateTime
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
-    Footballer   Footballer? @relation(fields: [footballerId], references: [footballerId])
-    footballerId String?      @db.ObjectId
+    footballerId    String?  @db.ObjectId
 }

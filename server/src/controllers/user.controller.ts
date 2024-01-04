@@ -15,26 +15,12 @@ export const createUser = async (req: Request, res: Response) => {
 		// Check if the email already exists in the database
 		const emailExist = await prisma.user.findUnique({
 			where: {email: email},
-			// include: {
-			// 	footballer: {
-			// 		select: {
-			// 			footballerName: true,
-			// 		},
-			// 	},
-			// },
 		});
 
 		if (!emailExist) {
 			// if the user does not exist in the database, create a new user
 			const newUser = await prisma.user.create({
 				data: {name: name, email: email, picture: picture},
-				// include: {
-				// 	footballer: {
-				// 		select: {
-				// 			footballerName: true,
-				// 		},
-				// 	},
-				// },
 			});
 			return res.status(201).send({message: 'User created successfully!', user: newUser});
 		} else {
