@@ -1,18 +1,33 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import ModalQuestions from '../modalQuestions/ModalQuestions';
 import Image from 'react-bootstrap/Image';
 import styled from 'styled-components';
 
+interface Footballer {
+	footballerId: string;
+	footballerName: string;
+	footballerPicture: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+interface ApiResponse {
+	allFootballers: Footballer[];
+}
+
 const PicturesButtons = () => {
 	const [modalShow, setModalShow] = useState(false);
 	const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+	const [images, setImages] = useState<Footballer[]>([]);
 
-	const images = [
-		{id: 'masip', src: 'https://i.postimg.cc/Pq2sRBVK/masip.png', alt: 'Jordi Masip'},
-		{id: 'torres', src: 'https://i.postimg.cc/FK9XG9p7/torres.png', alt: 'David Torres'},
-		{id: 'moro', src: 'https://i.postimg.cc/htRBz878/moro.png', alt: 'Raúl Moro'},
-		{id: 'andre', src: 'https://i.postimg.cc/T3jXryrz/andre.png', alt: 'Marcos André'},
-	];
+	useEffect(() => {
+		fetch('http://localhost:8080/api/footballer')
+			.then((response) => response.json())
+			.then((data: ApiResponse) => {
+				return setImages(data || []);
+			})
+			.catch((error) => console.error('Error fetching images:', error));
+	}, []);
 
 	const handleImageClick = (id: string | null) => {
 		setModalShow(true);
@@ -23,8 +38,8 @@ const PicturesButtons = () => {
 		<ModalPicturesContainer>
 			<div className="pictures">
 				{images.map((image) => (
-					<StyledImage key={image.id} id={image.id} src={image.src} alt={image.alt} onClick={() => handleImageClick(image.id)} />
-				))}
+					<StyledImage key={image.footballerId} id={image.footballerId} src={image.footballerPicture} alt={image.footballerName} onClick={() => handleImageClick(image.footballerId)} />
+					))}
 			</div>
 
 			<ModalQuestions show={modalShow} onHide={() => setModalShow(false)} selectedImageId={selectedImageId} />

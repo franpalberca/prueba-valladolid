@@ -1,2 +1,2 @@
 export const HOME = "/";
-export const WELLNESS = "/private";
+export const PRIVATE = "/private";
