@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { ModalProps } from 'react-bootstrap/Modal';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-interface ModalQuestionsProps extends ModalProps {
+interface ModalQuestionsProps {
   onHide: () => void;
   selectedImageId: string | null;
 }
@@ -18,6 +17,8 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = (props) => {
     'Determina tus niveles de estrés',
     'Determina tu estado anímico',
   ];
+
+  const url = import.meta.env.VITE_API_URL;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState<number[]>(Array.from<number, number>({ length: questions.length }, () => 0));
@@ -32,14 +33,42 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = (props) => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Perform action for the last question (e.g., send data to backend)
-      console.log('Sending data to backend:', {
-        imageId: props.selectedImageId,  // Usar props.selectedImageId aquí
-        scores,
-      });
-      // Close the modal or perform any other action
+      sendAnswersToBackend();
       props.onHide();
+      resetState(); // Restablecer estados al cerrar el modal
     }
+  };
+
+  const sendAnswersToBackend = async () => {
+    try {
+      const response = await fetch(`${url}api/footballer/answer/${props.selectedImageId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          answerOne: scores[0],
+          answerTwo: scores[1],
+          answerThree: scores[2],
+          answerFour: scores[3],
+          answerFive: scores[4],
+          date: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Answers sent successfully!');
+      } else {
+        console.error('Failed to send answers. Status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error sending answers:', error);
+    }
+  };
+
+  const resetState = () => {
+    setCurrentQuestionIndex(0);
+    setScores(Array.from<number, number>({ length: questions.length }, () => 0));
   };
 
   return (

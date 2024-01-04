@@ -15,13 +15,15 @@ interface ApiResponse {
 	allFootballers: Footballer[];
 }
 
+const url = import.meta.env.VITE_API_URL
+
 const PicturesButtons = () => {
 	const [modalShow, setModalShow] = useState(false);
 	const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
 	const [images, setImages] = useState<Footballer[]>([]);
 
 	useEffect(() => {
-		fetch('http://localhost:8080/api/footballer')
+		fetch(`${url}api/footballer`)
 			.then((response) => response.json())
 			.then((data: ApiResponse) => {
 				return setImages(data || []);
