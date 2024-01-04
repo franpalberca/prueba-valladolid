@@ -5,9 +5,12 @@ import { requestRouter } from './routes/requests.routes';
 import errorHandler from './middlewares/error.middleware';
 import fileUpload from "express-fileupload"
 
+const APP_ORIGIN = process.env.APP_ORIGIN || 'http://localhost:5173';
 const app: Express = express();
-
-app.use(cors())
+const corsOptions = {
+	origin: APP_ORIGIN,
+};
+app.use(cors(corsOptions));
 app.use(morgan("dev"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing form data
