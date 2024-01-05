@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Image} from 'react-bootstrap';
 import styled from 'styled-components';
-import LinesChart from '../../chart/LinesChart'
+import LinesChart from '../../chart/LinesChart.tsx'
 
 
 interface FootballerInfo {
