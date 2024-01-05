@@ -13,10 +13,10 @@ This MERN (MongoDB, Express.js, React, Node.js) project is a web application des
 - [License](#license)
 
 ## APP
-(/client/public/principal.png)
-(/client/public/valladolid2.png)
-(/client/public/valladolid3.png)
-(/client/public/valladolid4.png)
+(client/public/principal.png)
+(client/public/valladolid2.png)
+(client/public/valladolid3.png)
+(client/public/valladolid4.png)
 
 ## Features
 - User Authentication: Secure user authentication system to allow football players to log in and access the application.
