@@ -3,15 +3,21 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { HOME } from '../../config/routes/paths';
 
 export const PrivateRoute = () => {
-    const {isAuthenticated} = useAuth0();
+    const {  isAuthenticated, user } = useAuth0();
 
     if (!isAuthenticated) {
-        return <Navigate to={HOME} />;
+        return <div>Loading ...</div>;
     }
     return (
-        <div>
-            <Outlet />
-        </div>
+        <>
+            {user ? (
+                <div>
+                    <Outlet />
+                </div>
+            ) : (
+                <Navigate to={HOME} />
+            )}
+        </>
     )
 
 }

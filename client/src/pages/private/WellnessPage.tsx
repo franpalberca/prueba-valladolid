@@ -1,8 +1,13 @@
-type Props = {}
+import { useAuth0 } from "@auth0/auth0-react"
+import PicturesButtons from "../../components/modalButton/PicturesButtons"
 
-const WellnessPage = (props: Props) => {
+const WellnessPage = () => {
+  const { isAuthenticated } = useAuth0()
+  console.log(isAuthenticated)
   return (
-    <div>WellnessPage</div>
+    <>
+      <PicturesButtons />
+      </>
   )
 }
 

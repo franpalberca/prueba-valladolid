@@ -2,6 +2,10 @@ import {useState, useEffect} from 'react';
 import ModalQuestions from '../modalQuestions/ModalQuestions';
 import Image from 'react-bootstrap/Image';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { STATISTICS } from '../../config/routes/paths';
+import NavbarSite from '../navbar/Navbar';
 
 export interface Footballer {
 	footballerId: string;
@@ -21,6 +25,10 @@ const PicturesButtons = () => {
 	const [modalShow, setModalShow] = useState(false);
 	const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
 	const [images, setImages] = useState<Footballer[]>([]);
+	const navigate = useNavigate()
+    const handleStatisticsClick = () => {
+        navigate(STATISTICS)
+    }
 
 	useEffect(() => {
 		fetch(`${url}api/footballer`)
@@ -38,6 +46,7 @@ const PicturesButtons = () => {
 
 	return (
 		<ModalPicturesContainer>
+			<NavbarSite />
 			<h1 className='title'>VALLADOLID FC</h1>
 			<h4 className='subtitle'>SELECCIONE EL JUGADOR PARA RESPONDER CUESTIONARIO</h4>
 			<div className="pictures">
@@ -45,6 +54,7 @@ const PicturesButtons = () => {
 					<StyledImage key={image.footballerId} id={image.footballerId} src={image.footballerPicture} alt={image.footballerName} onClick={() => handleImageClick(image.footballerId)} />
 					))}
 			</div>
+			<Button className='button' onClick={handleStatisticsClick}>Estadísticas</Button>
 
 			<ModalQuestions show={modalShow} onHide={() => setModalShow(false)} selectedImageId={selectedImageId} />
 		</ModalPicturesContainer>
@@ -74,6 +84,11 @@ background-color:#921B88;
 		grid-column-gap: 0px;
 		grid-row-gap: 0px;
 		cursor: pointer;
+	}
+	& .button {
+		margin-left: 100vh;
+		margin-top: 5px;
+		height: 10vh
 	}
 `;
 

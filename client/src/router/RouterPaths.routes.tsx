@@ -14,13 +14,13 @@ const RouterPaths = () => {
 				<Routes>
 					<Route path={HOME} element={<PublicRoute />}>
 						<Route index element={<LandingPage />} />
-						<Route path={STATISTICS} element={<StatisticsPage />}/>
-						<Route path={STATISTICSPLAYER} element={<StatisticsPlayerPage />}/>
+						{/* <Route path={STATISTICS} element={<StatisticsPage />}/>
+						<Route path={STATISTICSPLAYER} element={<StatisticsPlayerPage />}/> */}
 					</Route>
 					<Route path={PRIVATE} element={<PrivateRoute />}>
 						<Route index element={<WellnessPage />} />
-						{/* <Route path={STATISTICS} element={<StatisticsPage />}/> */}
-						{/* <Route path={STATISTICSPLAYER} element={<StatisticsPlayerPage />}/> */}
+						<Route path={STATISTICS} element={<StatisticsPage />}/>
+						<Route path={STATISTICSPLAYER} element={<StatisticsPlayerPage />}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>

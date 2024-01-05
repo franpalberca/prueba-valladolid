@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react';
 import {ApiResponse, Footballer} from '../../components/modalButton/PicturesButtons';
 import {useNavigate} from 'react-router-dom';
-import {STATISTICS} from '../../config/routes/paths';
+import {PRIVATE, STATISTICS} from '../../config/routes/paths';
 import styled from 'styled-components';
 import Image from 'react-bootstrap/Image';
+import NavbarSite from '../../components/navbar/Navbar';
+import { Button } from 'react-bootstrap';
 
 const url = import.meta.env.VITE_API_URL;
 const StatisticsPage = () => {
@@ -22,9 +24,13 @@ const StatisticsPage = () => {
 	const handleImageClickStatistics = (id: string | null) => {
 		navigate(`${STATISTICS}/${id}`);
 	};
+	const handlePrivateClick = () => {
+        navigate(PRIVATE)
+    }
 
 	return (
 		<ModalPicturesContainer>
+			<NavbarSite />
 			<h1 className="title">PÁGINA DE ESTADÍSTICAS</h1>
 			<h4 className="subtitle">SELECCIONE EL JUGADOR</h4>
 			<div className="pictures">
@@ -32,6 +38,7 @@ const StatisticsPage = () => {
 					<StyledImage key={image.footballerId} id={image.footballerId} src={image.footballerPicture} alt={image.footballerName} onClick={() => handleImageClickStatistics(image.footballerId)} />
 				))}
 			</div>
+			<Button className='button' onClick={handlePrivateClick}>Estadísticas</Button>
 		</ModalPicturesContainer>
 	);
 };
@@ -59,6 +66,11 @@ const ModalPicturesContainer = styled.div`
 		grid-column-gap: 0px;
 		grid-row-gap: 0px;
 		cursor: pointer;
+	}
+	& .button {
+		margin-left: 100vh;
+		margin-top: 5px;
+		height: 10vh
 	}
 `;
 
